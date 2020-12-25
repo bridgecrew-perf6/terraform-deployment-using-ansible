@@ -1,0 +1,100 @@
+---
+- hosts: jenkins-server
+  tasks:
+    - name: updating apt
+      apt:
+        update_cache: true
+    - name: Set timezone to Asia/Kolkata
+      timezone:
+        name: Asia/Kolkata
+    - name: installing java
+      apt:
+          name: default-jdk
+          state: present
+          update_cache: true
+    - name: installing curl and wget
+      apt:
+          name: ['curl', 'wget', 'apt-transport-https']
+          state: present
+          update_cache: true
+    # - name: adding nodejs repository
+    #   shell: 'curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh'
+    # - name: preparing script of nodejs
+    #   shell: 'bash nodesource_setup.sh'
+    # - name: installing nodejs
+    #   apt:
+    #     name: nodejs
+    #     state: present
+    #     update_cache: true
+    - name: include Jenkins APT repository
+      shell: "wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -"
+    - name: addnig a stable LTS Jenkins repository
+      shell: "echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list"
+    - name: updating packge manager
+      shell: apt update
+    - name: installing jenkins
+      apt:
+        name: jenkins
+        state: present
+        update_cache: true
+    - name: updating packge manager
+      shell: apt update
+    - name: installing apt-transport-https
+      apt:
+          name: apt-transport-https
+          state: present
+          update_cache: true
+    - name: installing ca-certificates
+      apt:
+          name: ca-certificates
+          state: present
+          update_cache: true
+    - name: installing gnupg2
+      apt:
+          name: gnupg2
+          state: present
+          update_cache: true
+    - name: installing software-properties-common
+      apt:
+          name: software-properties-common
+          state: present
+          update_cache: true
+    # - name:  adding docker Docker’s official GPG key
+    #   shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+    # - name:  adding docker Docker’s official repo
+    #   shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+    # - name: updating packge manager
+    #   apt:
+    #     update_cache: true
+    # - name: installing docker-ce
+    #   apt:
+    #       name: ['docker-ce','docker-ce-cli','containerd.io']
+    #       state: present
+    #       update_cache: true
+
+    # - name: "Configuring Sudoers File"
+    #   lineinfile:
+    #     path: /etc/sudoers
+    #     insertafter: '^# Cmnd alias specification'
+    #     line: "Cmnd_Alias JENKINS_USER_CMDS = /usr/bin/docker"
+    #     state: present
+
+    # - name: "Configuring Sudoers File"
+    #   lineinfile:
+    #       path: "/etc/sudoers"
+    #       regexp: "%sudo "
+    #       line: "%sudo  ALL=(ALL)    NOPASSWD: JENKINS_USER_CMDS"
+    #       state: present
+    # - name: "reloading daemon"
+    #   shell: "systemctl daemon-reload"
+    # - name: "restart docker service"
+    #   service: 
+    #     name: docker
+    #     state: restarted
+    #     enabled: true 
+  #  - name: give access sudoers to process without password prompt
+  #    blockinfile:
+  #        path: /etc/sudoers
+  #        block: |
+  #          %wheel ALL=(ALL) NOPASSWD: ALL
+  #          jenkins ALL=(ALL) NOPASSWD: ALL      
