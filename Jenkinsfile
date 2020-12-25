@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    stage("build") {
+    stages("build") {
         steps {
             sh 'ansible-playbook instance-creation-using-terraform.yml'
         }
