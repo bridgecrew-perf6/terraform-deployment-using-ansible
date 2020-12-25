@@ -7,6 +7,6 @@
        terraform:
          project_path: '{{ project_dir }}'
          force_init: true
-         state: present
+         state: absent
          variables:
             instance_type: '{{ instance_type }}'
