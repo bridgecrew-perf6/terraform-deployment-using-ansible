@@ -19,7 +19,7 @@
        terraform:
          project_path: '{{ project_dir }}'
          force_init: true
-         state: absent
+         state: present
          plan_file: '{{ new_plan_file }}'
          variables:
             instance_type: '{{ instance_type }}'
