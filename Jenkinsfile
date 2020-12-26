@@ -14,7 +14,7 @@ pipeline {
         }
         stage("execute_only") {
             steps {
-                sh 'ansible-playbook instance-creation-using-terraform-from-plan.yml
+                sh 'ansible-playbook instance-creation-using-terraform-from-plan.yml'
             }
         }
     }
