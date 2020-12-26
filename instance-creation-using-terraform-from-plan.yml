@@ -8,6 +8,7 @@
          project_path: '{{ project_dir }}'
          force_init: true
          state: present
+         plan_file: '{{ plan_file }}'
          variables:
             instance_type: '{{ instance_type }}'
        register: x

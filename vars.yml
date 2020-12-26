@@ -1,2 +1,3 @@
 project_dir: "./terraform" 
-instance_type: "t2.micro"
+instance_type: "t2.nano"
+plan_file: "myplan.tfplan"
