@@ -3,11 +3,24 @@
    vars_files:
           - vars.yml
    tasks: 
-     - name: applying the terraform folder
+     - name: terraform plan
+       terraform:
+         project_path: '{{ project_dir }}'
+         force_init: true
+         state: planned
+         plan_file: '{{ new_plan_file }}'
+         variables:
+            instance_type: '{{ instance_type }}'
+       register: x
+     - debug:
+         var: x.stdout
+
+     - name: applying the terraform plan
        terraform:
          project_path: '{{ project_dir }}'
          force_init: true
          state: present
+         plan_file: '{{ new_plan_file }}'
          variables:
             instance_type: '{{ instance_type }}'
        register: x
